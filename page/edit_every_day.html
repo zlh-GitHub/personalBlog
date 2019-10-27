@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Tiny, opensource, Bootstrap WYSIWYG rich text editor from MindMup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="opensource rich wysiwyg text editor jquery bootstrap execCommand html5" />
+    <meta name="description" content="This tiny jQuery Bootstrap WYSIWYG plugin turns any DIV into a HTML5 rich text editor" />
+    <link rel="shortcut icon" href="http://mindmup.s3.amazonaws.com/lib/img/favicon.ico">
+    <link href="./bootstrap-wysiwyg-master/external/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <link href="./bootstrap-wysiwyg-master/index.css" rel="stylesheet">
+    <style>
+        .container {
+            width: 1000px;
+            margin: 100px auto;
+            background-color: #eee;
+            border-radius: 8px;
+            padding: 19px;
+        }
+        
+        #submit {
+            box-sizing: border-box;
+            width: 100px;
+            height: 35px;
+            margin-top: 20px;
+            outline: none;
+            background-color: #fff;
+            border-radius: 3px;
+            border: none;
+            font-weight: bold;
+            display: block;
+        }
+        
+        #every_chinese,
+        #every_english {
+            outline: none;
+            border: none;
+            width: 800px;
+            resize: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h3>每日一句</h3>
+        <textarea name="every_chinese" id="every_chinese" cols="60" rows="5" placeholder="请输入每日一句中文"></textarea>
+        <textarea name="every_english" id="every_english" cols="60" rows="5" placeholder="请输入每日一句英文"></textarea>
+        <input type="text" name="every_author" id="every_author" placeholder="请输入每日一句作者">
+        <button id="submit">submit</button>
+
+    </div>
+
+    <script>
+        var btn = document.getElementById("submit");
+        btn.onclick = function() {
+            var everyC = $("#every_chinese").val().trim();
+            var everyE = $("#every_english").val().trim();
+            var everyA = $("#every_author").val().trim();
+            var data = {
+                "everyC": everyC,
+                "everyE": everyE,
+                "everyA": everyA
+            }
+
+            if (everyA && everyC && everyE) {
+                $.ajax({
+                    method: "post",
+                    url: "/editEveryDay",
+                    data: JSON.stringify(data),
+                    success: function(resp) {
+                        var data = JSON.parse(resp);
+                        if (data.status === "success") {
+                            alert("添加成功");
+                            $("#every_chinese").val("");
+                            $("#every_english").val("");
+                            $("#every_author").val("");
+
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+            } else {
+                alert("请填写完整");
+            }
+
+
+        };
+    </script>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <a href="./index.html" class="logo">某某个人博客 | 技术博客</a>
+            <ul class="menu">
+                <li><a href="./index.html">首页</a></li>
+                <li><a href="./siteMap.html">地图</a></li>
+                <li><a href="./about.html">关于</a></li>
+                <li><a href="./guestbook.html">留言</a></li>
+            </ul>
+            <div class="search">
+                <input type="text" placeholder="输入关键词查找" v-model="searchValue">
+                <button class="search_btn" @click="search">搜索</button>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="content-left">
+            <div class="every-day" id="every-day">
+                <span class="headtip">每日一句</span>
+                <p>{{getContentE}}</p>
+                <p>{{getContentC}}<span class="pull-right">{{getAuthor}}</span></p>
+            </div>
+
+            <div class="article_list" id="article_list">
+                <div class="article" v-for="(article, index) in articleList" :key="index">
+                    <span class="title">
+                        <a :href="`/blog_detail.html?bid=${article.id}`">{{article.title}}</a>
+                    </span>
+                    <p>{{article.decript}}</p>
+                    <div class="info">
+                        {{getInfo(article)}}
+                    </div>
+                </div>
+                <div class="have_article" v-if="!haveArticle">没有找到相关文章</div>
+                <div class="page_tool" v-if="haveArticle">
+                    <ul>
+                        <li v-for="(item, index) in pageNumList" :key="index" :data-page="item.page" @click="jumpTo(item.page)" :class="{active: page == item.text}">{{item.text}}</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="content-right">
+            <div class="right_module tag_cloud" id="random_tags">
+                <div class="head">随机标签云</div>
+                <div class="right_content">
+                    <a href="#" v-for="(tag, index) in tags" :key="index" :style="{color: randomColor(), fontSize: randomSize()}" @click="tagClick(tag)">{{tag}}</a>
+                </div>
+            </div>
+
+            <div class="right_module recent_hot" id="recent_hot">
+                <div class="head">最近热门</div>
+                <ul class="right_content">
+                    <li v-for="(item, index) in recentBlogList" :key="index"><a :href="item.link">{{item.title}}</a></li>
+                </ul>
+            </div>
+
+            <div class="right_module new_comments" id="new_comments">
+                <div class="head">最新评论</div>
+                <ul class="right_content">
+                    <li v-for="(comment, index) in commentList" :key="index">
+                        <div>
+                            <span>{{comment.name}}</span>
+                            <span class="pull_right">{{comment.date}}</span>
+                        </div>
+                        <p><a :href="comment.link">{{comment.comment}}</a></p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="right_module friendship_link" id="friendship_link">
+                <div class="head">用到的技术链接</div>
+                <table class="right_content">
+                    <tbody>
+                        <tr v-for="(item, index) in list" :key="index">
+                            <td v-for="(v, i) in item" :key="i"><a :href="v.href">{{v.name}}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer class="footer" id="footer">
+        <ul>
+            <li v-for="(item, index) in footerLink" :key="index">{{item}}</li>
+        </ul>
+        <div>© 2010-2019 zlh个人博客</div>
+    </footer>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/base.js"></script>
+</body>
+
+</html>

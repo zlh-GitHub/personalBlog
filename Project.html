@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Project</title>
+    <style>
+        .CarBar {
+            width: 19.0em;
+            margin: auto;
+            font-size: 1.0em;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .CarLabel {
+            margin-left: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <p></p>
+    <div>
+        <table align="left">
+            <tr>
+                <td>
+                    <div class="CarBar">
+                        <fieldset>
+                            <legend>Brand</legend>
+                            <input type="checkbox" id="brand-audi" name="brand" value="audi" />
+                            <label for="brand-audi" id="label-audi" class="CarLabel">Audi</label><br>
+
+                            <input type="checkbox" id="brand-bmw" name="brand" value="bmw" />
+                            <label for="brand-bmw" id="label-bmw" class="CarLabel">BMW</label><br>
+
+                            <input type="checkbox" id="brand-ford" name="brand" value="ford" />
+                            <label for="brand-ford" id="label-ford" class="CarLabel">Ford</label><br>
+
+                            <input type="checkbox" id="brand-mazda" name="brand" value="mazda" />
+                            <label for="brand-mazda" id="label-mazda" class="CarLabel">Mazda</label><br>
+
+                            <input type="checkbox" id="brand-toyota" name="brand" value="toyota" />
+                            <label for="brand-toyota" id="label-toyota" class="CarLabel">Toyota</label><br>
+
+                            <input type="checkbox" id="brand-nissan" name="brand" value="nissan" />
+                            <label for="brand-nissan" id="label-nissan" class="CarLabel">Nissan</label><br>
+
+                            <input type="checkbox" id="brand-holden" name="brand" value="holden" />
+                            <label for="brand-holden" id="label-holden" class="CarLabel">Holden</label><br>
+                        </fieldset>
+                    </div>
+                    <p></p>
+                    <label>Minimum Price</label>
+                    <input type="text" id="minprice" value="" />
+                </td>
+                <td>
+                    <div class="CarBar">
+                        <fieldset>
+                            <legend>Body Type</legend>
+                            <input type="checkbox" id="input-convertible" name="input" value="convertible" />
+                            <label for="input-convertible" id="label-convertible"
+                                class="CarLabel">convertible</label><br>
+
+                            <input type="checkbox" id="input-coupe" name="input" value="coupe" />
+                            <label for="input-coupe" id="label-coupe" class="CarLabel">coupe</label><br>
+
+                            <input type="checkbox" id="input-hatch" name="input" value="hatch" />
+                            <label for="input-hatch" id="label-hatch" class="CarLabel">hatch</label><br>
+
+                            <input type="checkbox" id="input-sedan" name="input" value="sedan" />
+                            <label for="input-sedan" id="label-sedan" class="CarLabel">sedan</label><br>
+
+                            <input type="checkbox" id="input-suv" name="input" value="suv" />
+                            <label for="input-suv" id="label-suv" class="CarLabel">suv</label><br>
+
+                            <input type="checkbox" id="input-van" name="input" value="van" />
+                            <label for="input-van" id="label-van" class="CarLabel">van</label><br>
+
+                            <input type="checkbox" id="input-wagon" name="input" value="wagon" />
+                            <label for="input-wagon" id="label-wagon" class="CarLabel">wagon</label><br>
+                        </fieldset>
+                    </div>
+                    <p></p>
+                    <label>Maximum Price</label>
+                    <input type="text" id="maxprice" value="" />
+                </td>
+                <td>
+                    <div class="CarBar">
+                        <fieldset>
+                            <legend>Location</legend>
+                            <input type="checkbox" id="feature-brisbane" name="feature" value="brisbane" />
+                            <label for="feature-brisbane" id="label-brisbane" class="CarLabel">Brisbane</label><br>
+
+                            <input type="checkbox" id="feature-bundaberg" name="feature" value="bundaberg" />
+                            <label for="feature-bundaberg" id="label-bundaberg" class="CarLabel">Bundaberg</label><br>
+
+                            <input type="checkbox" id="feature-gladstone" name="feature" value="gladstone" />
+                            <label for="feature-gladstone" id="label-gladstone" class="CarLabel">Gladstone</label><br>
+
+                            <input type="checkbox" id="feature-adelaide" name="feature" value="adelaide" />
+                            <label for="feature-adelaide" id="label-adelaide" class="CarLabel">Adelaide</label><br>
+
+                            <input type="checkbox" id="feature-melbourne" name="feature" value="melbourne" />
+                            <label for="feature-melbourne" id="label-melbourne" class="CarLabel">Melbourne</label><br>
+
+                            <input type="checkbox" id="feature-perth" name="feature" value="perth" />
+                            <label for="feature-perth" id="label-perth" class="CarLabel">Perth</label><br>
+
+                            <input type="checkbox" id="feature-sydney" name="feature" value="sydney" />
+                            <label for="feature-sydney" id="label-sydney" class="CarLabel">Sydney</label><br>
+                        </fieldset>
+                    </div>
+                    <p></p>
+                    <input type="button" id="filterBtn" value="Filter" />
+                    <input type="button" id="clearBtn" value="Clear" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id='CSV'></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <p></p>
+    <script>
+        console.log('Starting ...');
+
+        // Place the radio buttons in a list
+
+        fetch('CSV.txt')
+            .then(Response => Response.text())
+            .then(text => {
+                CSV.innerText = text;
+                console.log(text)
+            })
+
+        let colourBtns = [];
+        colourBtns.push(document.getElementById("colour-red"));
+        colourBtns.push(document.getElementById("colour-green"));
+        colourBtns.push(document.getElementById("colour-blue"));
+        console.log(colourBtns);
+
+        let colourLabs = [];
+        colourLabs.push(document.getElementById("label-red"));
+        colourLabs.push(document.getElementById("label-green"));
+        colourLabs.push(document.getElementById("label-blue"));
+        console.log(colourLabs);
+
+        let ticked = new Map();
+        colourBtns.forEach(btn => ticked.set(btn.value, 0));
+        console.log(ticked);
+
+        let updateTicks = function () {
+            for (let i = 0; i < colourBtns.length; i++) {
+                let colour = colourBtns[i].value;
+                let ticks = ticked.get(colour);
+                colourLabs[i].innerText = `${colour} (${ticks})`;
+            }
+        }
+
+        updateTicks();
+
+        readBtn.onclick = function () {
+            let result = [];
+            colourBtns.forEach(btn => {
+                if (btn.checked) {
+                    result.push(btn.value);
+                    ticked.set(btn.value, ticked.get(btn.value) + 1);
+                }
+            });
+            console.log(result);
+            updateTicks();
+        }
+
+        clearBtn.onclick = function () {
+            colourBtns.forEach(btn => btn.checked = false);
+        }
+    </script>
+</body>
+
+</html>
